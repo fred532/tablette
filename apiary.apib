@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST: http://fleuriste.interflora.fr/proxyFrontOffice/api
 
-# tablette
+# API SI Interflora => tablette
 
 Documentation des web services rest
 
@@ -58,7 +58,7 @@ Documentation des web services rest
                 "numCmd": "Numéro de commande de la forme XXNNNNNNNN avec NN = prefix envoyé dans la requete (IF si non présent), et XXXXXXXX = compteur numérique sur 8 chiffres."
             }
             
-## Transmission d'une commande de tablette => Si Interflora [/commande]
+## Transmission d'une commande de tablette => SI Interflora [/commande]
 
 ### Requete pour obtenir un numéro de commande [POST]
 
@@ -130,10 +130,41 @@ Documentation des web services rest
 
     + Headers
 
-            Location: /compteur
+            Location: /commande
 
     + Body
 
             {
-                "reponse" : "reponse"
+                "dateCommande" : "date d'enregistrement de la commande",
+                "heureCommande" : "heure d'enregistrement de la commande"
+            }
+
+## Service de faisabilité de commande [/faisabilite]
+
+### Requete d'intérogation de la faisablilité d'une commande[POST]
+
++ Request (application/json)
+
+        {
+            "codePostal" : "",
+            "codeProduitSku" : "",
+            "dateLivraison" : "",
+            "horaire" : "",
+            "insee" : "",
+            "listeAccessoiresSku" :""
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /faisabilite
+
+    + Body
+
+            {
+                "codeErreur" : "",
+                "libelleErreur" : "",
+                "jetonCommande" : "",
+                "listeDesExecutants",
+                "accessoiresPossibles", ""
             }
