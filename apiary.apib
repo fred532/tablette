@@ -3,20 +3,18 @@ HOST: http://fleuriste.interflora.fr/proxyFrontOffice/api
 
 # tablette
 
-Service d'authentification
+Documentation des web services rest
 
-## url de login [/loginTablette]
+## Service de connexion [/loginTablette]
 
-### requete de login [POST]
+### Requete de connexion [POST]
 
 + Request (application/json)
 
-        [
-            {
-                "floristId": "Numéro de membre du fleuriste",
-                "password": "Mot de passe"
-            }
-        ]
+        {
+            "floristId": "Numéro de membre du fleuriste",
+            "password": "Mot de passe"
+        }
 
 + Response 201 (application/json)
 
@@ -38,17 +36,16 @@ Service d'authentification
                 }
             }
 
-## compteur de numéros de commande [/compteur]
+## Compteur de numéros de commande [/compteur]
 
-### requete pour obtenir un numéro de commande [POST]
+### Requete pour obtenir un numéro de commande [POST]
 
 + Request (application/json)
 
-        [
-            {
-                "prefix": "Préfix du numéro de commande. Non obligatoire. On utilise IF si prefix n'est pas definit.",
-            }
-        ]
+        {
+            "prefix": "Préfix du numéro de commande. Non obligatoire. On utilise IF si prefix n'est pas definit.",
+        }
+
 + Response 201 (application/json)
 
     + Headers
@@ -59,4 +56,84 @@ Service d'authentification
 
             {
                 "numCmd": "Numéro de commande de la forme XXNNNNNNNN avec NN = prefix envoyé dans la requete (IF si non présent), et XXXXXXXX = compteur numérique sur 8 chiffres."
+            }
+            
+## Transmission d'une commande de tablette => Si Interflora [/commande]
+
+### Requete pour obtenir un numéro de commande [POST]
+
++ Request (application/json)
+
+        {
+            "numeroTransmetteur",
+            "commandeId",
+            "jetonCde",
+            "execChoisi",
+            "prixTotal",
+            "prixLivraison",
+            "totalPromotions",
+            "dateLivraison",
+            "momentLivraison",
+            "occasion",
+            "messagePerso",
+            "signature",
+            "client" : [
+                {
+                    "nom",
+                    "telephone1",
+                    "telephone2",
+                    "prenom",
+                    "email"
+                }
+            ],
+            "destinataire" : [
+                {
+                    "natureAdresse",
+                    "civilite",
+                    "nom",
+                    "prenom",
+                    "telephone1",
+                    "telephone2",
+                    "adresse",
+                    "ville",
+                    "codePostal",
+                    "insee",
+                    "infoComplementaire1",
+                    "infoComplementaire2",
+                    "batiment",
+                    "etage",
+                    "digicode",
+                    "porte"
+                }
+            ],
+            "lignesCommande" : [
+                {
+                    "codeProduit",
+                    "libelle",
+                    "quantite",
+                    "prixVariante",
+                    "prix",
+                    "fraisReseau",
+                    "typeProduit",
+                    "privex",
+                    "complementPrixMarketing",
+                    "complementPrixInterflora",
+                    "tailleProduit"
+                }
+            ],
+            "adresseIpNode",
+            "userAgent",
+            "employee"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /compteur
+
+    + Body
+
+            {
+                "reponse" : "reponse"
             }
