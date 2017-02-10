@@ -1,0 +1,62 @@
+FORMAT: 1A
+HOST: http://fleuriste.interflora.fr/proxyFrontOffice/api
+
+# tablette
+
+Service d'authentification
+
+## url de login [/loginTablette]
+
+### requete de login [POST]
+
++ Request (application/json)
+
+        [
+            {
+                "floristId": "Numéro de membre du fleuriste",
+                "password": "Mot de passe"
+            }
+        ]
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /loginTablette
+
+    + Body
+
+            {
+                "stusP": "Réponse principale du WS (0 ou 1)",
+                "stusS": "Raison de la non autorisation d'acces (de 0 à 5)",
+                "idAgent": "idAgent",
+                "idProfile": "V (vendeur) M (manager)",
+                "passInterne": "Rappel du mot de passe",
+                "info": "Partie informations sur le fleuriste. A completter si necessaire"
+                {
+                    "rs": "Raison sociale du fleuriste"
+                }
+            }
+
+## compteur de numéros de commande [/compteur]
+
+### requete pour obtenir un numéro de commande [POST]
+
++ Request (application/json)
+
+        [
+            {
+                "prefix": "Préfix du numéro de commande. Non obligatoire. On utilise IF si prefix n'est pas definit.",
+            }
+        ]
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /compteur
+
+    + Body
+
+            {
+                "numCmd": "Numéro de commande de la forme XXNNNNNNNN avec NN = prefix envoyé dans la requete (IF si non présent), et XXXXXXXX = compteur numérique sur 8 chiffres."
+            }
