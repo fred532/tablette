@@ -12,8 +12,8 @@ Documentation des web services rest
 + Request (application/json)
 
         {
-            "floristId": "Numéro de membre du fleuriste",
-            "password": "Mot de passe"
+            "floristId": "1128",
+            "password": "DVYTE"
         }
 
 + Response 201 (application/json)
@@ -25,15 +25,25 @@ Documentation des web services rest
     + Body
 
             {
-                "stusP": "Réponse principale du WS (0 ou 1)",
-                "stusS": "Raison de la non autorisation d'acces (de 0 à 5)",
-                "idAgent": "idAgent",
-                "idProfile": "V (vendeur) M (manager)",
-                "passInterne": "Rappel du mot de passe",
-                "info": "Partie informations sur le fleuriste. A completter si necessaire"
-                {
-                    "rs": "Raison sociale du fleuriste"
-                }
+                "stusP": "1",
+                "idAgent": "A10",
+               "idProfile": "V",
+               "passInterne": "agent10",
+               "catalogueVille":    {
+                  "url": "http://localhost:8080/catalogue/VILLE_20161222161253503.zip",
+                  "modify_at": "2016-12-22 16:12:53"
+               },
+               "catalogueProduit":    {
+                  "url": "http://localhost:8080/catalogue/PRODUIT_20170105155303322.zip",
+                  "modify_at": "2017-01-05 15:53:03"
+               },
+               "info":    {
+                  "rs": "INTERFLORA-P.DENAIN TEST",
+                  "adr": "8, place des Vins de France ",
+                  "codp": "75012",
+                  "vill": "PARIS",
+                  "telp": "0478955982"
+               }
             }
 
 ## Compteur de numéros de commande [/compteur]
@@ -43,7 +53,7 @@ Documentation des web services rest
 + Request (application/json)
 
         {
-            "prefix": "Préfix du numéro de commande. Non obligatoire. On utilise IF si prefix n'est pas definit.",
+            "prefix": "IF"
         }
 
 + Response 201 (application/json)
@@ -55,75 +65,68 @@ Documentation des web services rest
     + Body
 
             {
-                "numCmd": "Numéro de commande de la forme XXNNNNNNNN avec NN = prefix envoyé dans la requete (IF si non présent), et XXXXXXXX = compteur numérique sur 8 chiffres."
+                "numCmd": "IF00000001"
             }
             
 ## Transmission d'une commande de tablette => SI Interflora [/commande]
 
-### Requete pour obtenir un numéro de commande [POST]
+### Requete de transmission d'une command [POST]
 
 + Request (application/json)
 
         {
-            "numeroTransmetteur",
-            "commandeId",
-            "jetonCde",
-            "execChoisi",
-            "prixTotal",
-            "prixLivraison",
-            "totalPromotions",
-            "dateLivraison",
-            "momentLivraison",
-            "occasion",
-            "messagePerso",
-            "signature",
+            "numeroTransmetteur" : "1128",
+            "commandeId" : "IF00158785",
+            "jetonCde" : "",
+            "execChoisi" : "",
+            "prixTotal" : "4680",
+            "totalPromotions" : "???",
+            "dateLivraison" : "20170212",
+            "momentLivraison" : "J",
+            "occasion" : "01",
+            "messagePerso" : "mon message",
+            "signature" : "ma signature",
             "client" : [
                 {
-                    "nom",
-                    "telephone1",
-                    "telephone2",
-                    "prenom",
-                    "email"
+                    "nom" : "nomClient",
+                    "telephone1" : "0123456789",
+                    "telephone2" : "0123456789,
+                    "prenom" : "prenomClient",
+                    "email" : "test@test.fr"
                 }
             ],
             "destinataire" : [
                 {
-                    "natureAdresse",
-                    "civilite",
-                    "nom",
-                    "prenom",
-                    "telephone1",
-                    "telephone2",
-                    "adresse",
-                    "ville",
-                    "codePostal",
-                    "insee",
+                    "natureAdresse" : "d",
+                    "civilite" : "mr",
+                    "nom" : "nomDestinataire",
+                    "prenom" : "prenomDestinataire",
+                    "telephone1" : "0123456789",
+                    "telephone2" : "0123456789",
+                    "adresse" : "adresseDest",
+                    "ville" : "LYON 2",
+                    "codePostal" : "69002",
+                    "insee" : "69123102",
                     "infoComplementaire1",
                     "infoComplementaire2",
-                    "batiment",
-                    "etage",
-                    "digicode",
-                    "porte"
+                    "batiment" : "B",
+                    "etage" : "12",
+                    "digicode" : "A123",
+                    "porte" : "gauche"
                 }
             ],
             "lignesCommande" : [
                 {
-                    "codeProduit",
-                    "libelle",
-                    "quantite",
-                    "prixVariante",
-                    "prix",
-                    "fraisReseau",
-                    "typeProduit",
-                    "privex",
-                    "complementPrixMarketing",
-                    "complementPrixInterflora",
-                    "tailleProduit"
+                    "codeProduit" : "2BO",
+                    "quantite" : "1",
+                    "typeProduit" : "TABLETTE",
+                    "tailleProduit" : "1",
+                    "privex" : "2500"
                 }
             ],
-            "adresseIpNode",
-            "userAgent",
-            "employee"
+            "adresseIpNode" : "127.0.0.1",
+            "userAgent" : "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0",
+            "employee" : "Magasin 1"
         }
 
 + Response 201 (application/json)
@@ -135,8 +138,7 @@ Documentation des web services rest
     + Body
 
             {
-                "dateCommande" : "date d'enregistrement de la commande",
-                "heureCommande" : "heure d'enregistrement de la commande"
+                "timeStampCommande" : "2017-02-10T15:50:00",
             }
 
 ## Service de faisabilité de commande [/faisabilite]
